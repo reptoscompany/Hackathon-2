@@ -20,7 +20,7 @@ const getTheme = (dark = false) => ({
   color: COLORS,
   backgroundColor: 'transparent',
   textStyle: {
-    fontFamily: 'IBM Plex Sans, sans-serif',
+    fontFamily: '"Source Serif 4", Georgia, serif',
     color: dark ? '#e2e8f0' : '#1e293b',
     fontSize: 12
   },

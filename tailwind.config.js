@@ -4,7 +4,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"IBM Plex Sans"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif']
+        sans: ['"Source Serif 4"', 'Georgia', '"Times New Roman"', 'serif'],
+        display: ['"Playfair Display"', 'Georgia', '"Times New Roman"', 'serif']
       },
       colors: {
         accent: 'var(--color-accent)'
