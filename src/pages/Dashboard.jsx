@@ -128,7 +128,7 @@ export function Dashboard() {
       </div>
 
       {/* Priority KPIs */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5 items-stretch">
         {priorityKPIs.map((kpi, i) => (
           <KPICard 
             key={i} 
@@ -155,7 +155,7 @@ export function Dashboard() {
           {showAllKPIs ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
         </Button>
         {showAllKPIs && (
-          <div className="p-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-5 border-t border-[var(--color-border)] animate-slide-up">
+          <div className="p-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-5 items-stretch border-t border-[var(--color-border)] animate-slide-up">
             {secondaryKPIs.map((kpi, i) => (
               <KPICardSecondary 
                 key={i} 
@@ -194,13 +194,13 @@ export function Dashboard() {
           </Card>
 
           {/* Top Areas + Hourly Distribution */}
-          <div className="grid gap-6 sm:grid-cols-2">
-            <Card>
+          <div className="grid gap-6 sm:grid-cols-2 items-stretch">
+            <Card className="h-full">
               <CardHeader>
                 <CardTitle>Top Areas by Incidents</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3 max-h-64 overflow-auto">
+                <div className="space-y-3 max-h-96 overflow-auto">
                   {services.charts.topAreas.slice(0, 8).map((area, i) => (
                     <div key={i} className="flex items-center justify-between gap-2 py-2 border-b border-[var(--color-border)] last:border-0">
                       <div className="flex items-center gap-2 sm:gap-3 min-w-0">
@@ -222,7 +222,7 @@ export function Dashboard() {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="h-full">
               <CardHeader>
                 <CardTitle>Hour of Day Distribution</CardTitle>
               </CardHeader>
@@ -246,8 +246,8 @@ export function Dashboard() {
         <div className="space-y-6">
           {/* Alerts Panel */}
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle className="flex items-center gap-2">
+            <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-2">
+              <CardTitle className="flex flex-wrap items-center gap-2 min-w-0">
                 <Bell className="w-5 h-5" aria-hidden="true" />
                 Recent Alerts
                 {unreadCount > 0 && (
@@ -343,7 +343,7 @@ export function Dashboard() {
       </div>
 
       {/* Prototype disclaimer */}
-      <div className="hidden sm:block fixed bottom-4 right-4 text-xs text-[var(--color-text-muted)] bg-[var(--color-surface)] px-3 py-1.5 rounded border border-[var(--color-border)] shadow-sm">
+      <div className="hidden sm:block fixed bottom-20 right-4 text-xs text-[var(--color-text-muted)] bg-[var(--color-surface)] px-3 py-1.5 rounded border border-[var(--color-border)] shadow-sm">
         Prototype — Simulated Data
       </div>
     </div>

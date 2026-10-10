@@ -7,15 +7,15 @@ export function RoleSwitcher({ compact = false }) {
 
   return (
     <label
-      className={`flex items-center gap-2 ${compact ? '' : 'border border-[var(--color-border)] rounded-md px-2.5 py-1.5 bg-[var(--color-surface)]'}`}
+      className={`flex items-center gap-1.5 ${compact ? '' : 'border border-[var(--color-border)] rounded-md px-2.5 py-1.5 bg-[var(--color-surface)]'}`}
       title={role.description}
     >
-      <ShieldCheck className="w-4 h-4 text-[var(--color-accent)] flex-shrink-0" aria-hidden="true" />
+      <ShieldCheck className="w-3.5 h-3.5 text-[var(--color-accent)] flex-shrink-0" aria-hidden="true" />
       <span className="sr-only">Active role (simulated)</span>
       <select
         value={roleId}
         onChange={(e) => setRoleId(e.target.value)}
-        className="!w-auto !border-0 !p-0 !shadow-none text-sm font-medium bg-transparent cursor-pointer focus:ring-0"
+        className="!w-auto !border-0 !p-0 !shadow-none !min-h-0 text-xs font-medium bg-transparent cursor-pointer focus:ring-0"
         aria-label="Active role, simulated"
       >
         {ROLES.map((r) => (

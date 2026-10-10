@@ -67,7 +67,7 @@ export function HotspotsRisk() {
         <span className="text-[var(--color-text-secondary)]"> No trained model, no accuracy claims. Scores are an illustrative weighted sum — one serious assault can outweigh several minor complaints because severity carries heavy weight.</span>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-6 lg:grid-cols-3 items-start">
         <div className="lg:col-span-2 space-y-6">
           <Card>
             <CardHeader>
@@ -115,11 +115,11 @@ export function HotspotsRisk() {
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
-                <table>
+                <table className="w-full min-w-[640px]">
                   <thead>
                     <tr>
                       <th scope="col">Area</th>
-                      {TIME_WINDOWS.map((w) => <th key={w} scope="col">{w}</th>)}
+                      {TIME_WINDOWS.map((w) => <th key={w} scope="col" className="whitespace-nowrap">{w}</th>)}
                     </tr>
                   </thead>
                   <tbody>
@@ -150,16 +150,16 @@ export function HotspotsRisk() {
               <CardTitle>Factor weights (adjustable)</CardTitle>
               <CardDescription>Scores renormalize automatically. The top hotspot updates live.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-3">
               {Object.keys(DEFAULT_WEIGHTS).map((key) => (
-                <div key={key}>
-                  <div className="flex justify-between text-sm mb-1">
-                    <label htmlFor={`w-${key}`} className="font-medium text-[var(--color-text-primary)]">{WEIGHT_LABELS[key]}</label>
-                    <span className="tabular-nums text-[var(--color-text-secondary)]">{Math.round(weights[key] * 100)}%</span>
+                <div key={key} className="min-w-0">
+                  <div className="flex justify-between gap-2 text-sm mb-1">
+                    <label htmlFor={`w-${key}`} className="font-medium text-[var(--color-text-primary)] min-w-0">{WEIGHT_LABELS[key]}</label>
+                    <span className="tabular-nums text-[var(--color-text-secondary)] flex-shrink-0">{Math.round(weights[key] * 100)}%</span>
                   </div>
                   <input id={`w-${key}`} type="range" min="0" max="100" value={Math.round(weights[key] * 100)}
                     onChange={(e) => setWeights((w) => ({ ...w, [key]: Number(e.target.value) / 100 }))}
-                    className="!p-0 w-full min-h-[44px] py-3 touch-manipulation" aria-label={`${WEIGHT_LABELS[key]} weight`} />
+                    className="w-full h-11 touch-manipulation" aria-label={`${WEIGHT_LABELS[key]} weight`} />
                 </div>
               ))}
               <Button variant="outline" size="sm" fullWidth onClick={() => setWeights(DEFAULT_WEIGHTS)}>Reset weights</Button>

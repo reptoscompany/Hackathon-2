@@ -199,7 +199,7 @@ export function CrimeMap() {
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
-      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
         <div>
           <h1 className="text-2xl font-semibold text-[var(--color-navy-900)]">Crime Map</h1>
           <p className="text-[var(--color-text-secondary)]">
@@ -226,10 +226,10 @@ export function CrimeMap() {
         </div>
       )}
 
-      <div className="flex flex-col lg:flex-row gap-4">
+      <div className="flex flex-col lg:flex-row gap-4 lg:items-start">
         {/* Slim collapsible filter panel */}
         {filtersOpen && (
-          <aside className="lg:w-80 flex-shrink-0 space-y-4" aria-label="Map filters">
+          <aside className="lg:w-80 flex-shrink-0 space-y-4 lg:sticky lg:top-20 self-start w-full" aria-label="Map filters">
             <Card>
               <CardContent className="p-4 space-y-4">
                 <div className="flex items-center justify-between">
@@ -245,7 +245,7 @@ export function CrimeMap() {
                 <Select label="District" value={filters.district} onChange={(e) => setFilters((f) => ({ ...f, district: e.target.value }))} options={[{ value: '', label: 'All districts' }, ...services.getUniqueDistricts().map((d) => ({ value: d, label: d }))]} />
                 <Select label="Police station" value={filters.station} onChange={(e) => setFilters((f) => ({ ...f, station: e.target.value }))} options={[{ value: '', label: 'All stations' }, ...services.getUniqueStations().map((s) => ({ value: s, label: s }))]} />
                 <Select label="Ward" value={filters.ward} onChange={(e) => setFilters((f) => ({ ...f, ward: e.target.value }))} options={[{ value: '', label: 'All wards' }, ...services.getUniqueWards().map((w) => ({ value: w, label: w }))]} />
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 gap-3">
                   <Input type="date" label="From" value={filters.from} onChange={(e) => setFilters((f) => ({ ...f, from: e.target.value }))} />
                   <Input type="date" label="To" value={filters.to} onChange={(e) => setFilters((f) => ({ ...f, to: e.target.value }))} />
                 </div>
@@ -281,7 +281,7 @@ export function CrimeMap() {
 
         {/* Map */}
         <div className="flex-1 min-w-0">
-          <div className="rounded-lg overflow-hidden border border-[var(--color-border)] h-[320px] sm:h-[420px] lg:h-[560px]">
+          <div className="rounded-lg overflow-hidden border border-[var(--color-border)] h-[60vh] min-h-[320px] max-h-[560px]">
             <MapContainer center={CENTER} zoom={12} style={{ height: '100%', width: '100%' }} aria-label="Interactive crime map of Puducherry area">
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -365,7 +365,7 @@ export function CrimeMap() {
                   <h2 className="font-semibold text-[var(--color-text-primary)]">Geospatial search</h2>
                   <Button variant="ghost" size="sm" onClick={() => setSearchOpen(false)} aria-label="Close search"><X className="w-4 h-4" aria-hidden="true" /></Button>
                 </div>
-                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                   <Input label="Latitude" value={search.lat} onChange={(e) => setSearch((s) => ({ ...s, lat: e.target.value, mode: 'custom' }))} />
                   <Input label="Longitude" value={search.lng} onChange={(e) => setSearch((s) => ({ ...s, lng: e.target.value, mode: 'custom' }))} />
                   <Input label="Radius (km)" type="number" min="0.1" step="0.1" value={search.radiusKm} onChange={(e) => setSearch((s) => ({ ...s, radiusKm: e.target.value }))} />
@@ -411,7 +411,7 @@ export function CrimeMap() {
               {filtered.length === 0 ? (
                 <EmptyState title="No incidents match" message="Widen the date range or clear crime-type and area filters." />
               ) : (
-                <ul className="divide-y divide-[var(--color-border)] max-h-72 overflow-auto">
+                <ul className="divide-y divide-[var(--color-border)] max-h-96 overflow-auto">
                   {(clusters ? [] : visibleMarkers.slice(0, 60)).map((i) => (
                     <li key={i.incident_id}>
                       <button type="button" onClick={() => setSelected(i)}

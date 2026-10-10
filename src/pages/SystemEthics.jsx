@@ -38,7 +38,7 @@ export function SystemEthics() {
           <CardDescription>Data flows left → right. Only mapping, analytics, and simulated prediction run in this prototype.</CardDescription>
         </CardHeader>
         <CardContent>
-          <ol className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4" aria-label="System modules">
+          <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-label="System modules">
             {MODULES.map((m, i) => (
               <li key={m.name} className="relative border border-[var(--color-border)] rounded-lg p-3 bg-[var(--color-surface)]">
                 <span className="absolute -top-2.5 left-3 bg-[var(--color-navy-900)] text-white text-[11px] font-semibold w-5 h-5 rounded-full flex items-center justify-center" aria-hidden="true">{i + 1}</span>
@@ -53,15 +53,15 @@ export function SystemEthics() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Suggested production stack <Badge variant="gray" size="sm">proposed, not implemented</Badge></CardTitle>
+          <CardTitle className="flex flex-wrap items-center gap-2 min-w-0">Suggested production stack <Badge variant="gray" size="sm">proposed, not implemented</Badge></CardTitle>
           <CardDescription>What a real deployment would need — none of this runs in the prototype.</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-2 sm:grid-cols-2 text-sm">
+          <div className="grid gap-4 sm:grid-cols-2 text-sm">
             {[['Database', 'PostgreSQL + PostGIS'], ['API', 'FastAPI or Node service layer'], ['Auth', 'JWT/OAuth2 with RBAC + audit logs'], ['Deploy', 'Docker containers, nightly backups']].map(([k, v]) => (
-              <div key={k} className="flex justify-between gap-4 border-b border-[var(--color-border)] py-2">
-                <span className="text-[var(--color-text-secondary)]">{k}</span>
-                <span className="font-medium text-[var(--color-text-primary)] text-right">{v}</span>
+              <div key={k} className="flex flex-wrap justify-between gap-2 sm:gap-4 border-b border-[var(--color-border)] py-2 min-w-0">
+                <span className="text-[var(--color-text-secondary)] flex-shrink-0">{k}</span>
+                <span className="font-medium text-[var(--color-text-primary)] text-right min-w-0 break-words">{v}</span>
               </div>
             ))}
           </div>
@@ -70,7 +70,7 @@ export function SystemEthics() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2"><ShieldCheck className="w-5 h-5" aria-hidden="true" /> Ethical &amp; security principles</CardTitle>
+          <CardTitle className="flex flex-wrap items-center gap-2 min-w-0"><ShieldCheck className="w-5 h-5 shrink-0" aria-hidden="true" /> Ethical &amp; security principles</CardTitle>
           <CardDescription>Designed with Indian data-protection and policing regulations in mind — not a claim of compliance.</CardDescription>
         </CardHeader>
         <CardContent>

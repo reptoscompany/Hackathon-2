@@ -57,7 +57,7 @@ export function Cases() {
 
       <Card>
         <CardContent className="p-4">
-          <div className="grid gap-3 sm:grid-cols-3 no-print">
+          <div className="grid gap-3 grid-cols-1 md:grid-cols-3 no-print">
             <Input label="Search" placeholder="Case no, address, station, ward…" value={query} onChange={(e) => setQuery(e.target.value)} leftIcon={<Eye className="w-4 h-4" aria-hidden="true" />} />
             <Select label="Status" value={status} onChange={(e) => setStatus(e.target.value)}
               options={[{ value: '', label: 'All statuses' }, ...STATUS_FLOW.map((s) => ({ value: s, label: s }))]} />
@@ -90,7 +90,7 @@ export function Cases() {
                   {
                     key: 'actions', header: 'Detail', sortable: false,
                     render: (r) => (
-                      <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); setDetail(r); }} aria-label={`Open ${r.case_number}`} className="min-h-[44px] min-w-[44px]">
+                      <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); setDetail(r); }} aria-label={`Open ${r.case_number}`} className="min-h-[36px] sm:min-h-[44px] min-w-[44px]">
                         Open
                       </Button>
                     )

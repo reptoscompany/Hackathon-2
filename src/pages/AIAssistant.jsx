@@ -273,14 +273,14 @@ export function AIAssistant() {
       </Card>
 
       {/* Data snapshot + prediction */}
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2 items-start">
         <Card>
           <CardHeader>
             <CardTitle>Data snapshot (what the AI sees)</CardTitle>
             <CardDescription>{services.incidents.length} incidents · {hotspots.length} wards · live from sample data</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 gap-3 text-sm">
+            <div className="grid grid-cols-1 min-[420px]:grid-cols-2 gap-3 text-sm">
               {[
                 ['Total cases', services.kpis.totalIncidents],
                 ['Most common', services.kpis.mostCommonType],
@@ -345,9 +345,9 @@ export function AIAssistant() {
           <CardDescription>Works offline with the summary; connects to your model when available</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex gap-2 flex-col sm:flex-row sm:flex-wrap">
             {PRESET_QUESTIONS.map((q) => (
-              <Button key={q} variant="outline" size="sm" onClick={() => { setQuestion(q); runAI('chat', q); }} disabled={busy} className="text-left">
+              <Button key={q} variant="outline" size="sm" onClick={() => { setQuestion(q); runAI('chat', q); }} disabled={busy} className="text-left whitespace-normal w-full sm:w-auto">
                 {q}
               </Button>
             ))}
@@ -358,7 +358,7 @@ export function AIAssistant() {
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               onKeyDown={(e) => { if (e.key === 'Enter') runAI('chat'); }}
-              className="flex-1"
+              className="flex-1 min-w-0"
               aria-label="Ask a question about the data"
             />
             <Button onClick={() => runAI('chat')} disabled={busy || !question.trim()} leftIcon={<Send className="w-4 h-4" aria-hidden="true" />} className="min-h-[44px]">

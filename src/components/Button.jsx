@@ -48,12 +48,12 @@ const Button = forwardRef(function Button({
       {...props}
     >
       {loading ? (
-        <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
+        <Loader2 className="w-4 h-4 animate-spin shrink-0" aria-hidden="true" />
       ) : (
         <>
-          {leftIcon && <span aria-hidden="true">{leftIcon}</span>}
+          {leftIcon && <span aria-hidden="true" className="shrink-0 inline-flex">{leftIcon}</span>}
           {children}
-          {rightIcon && <span aria-hidden="true">{rightIcon}</span>}
+          {rightIcon && <span aria-hidden="true" className="shrink-0 inline-flex">{rightIcon}</span>}
         </>
       )}
     </button>

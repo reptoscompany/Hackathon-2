@@ -11,7 +11,7 @@ const Card = forwardRef(function Card({
     <div
       ref={ref}
       className={`
-        bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg min-w-0 overflow-hidden
+        bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg min-w-0 overflow-visible
         ${elevated ? 'shadow-md' : 'shadow-sm'}
         ${padded ? 'p-4 sm:p-6' : ''}
         ${className}
@@ -27,7 +27,7 @@ Card.displayName = 'Card';
 
 const CardHeader = forwardRef(function CardHeader({ children, className = '', ...props }, ref) {
   return (
-    <div ref={ref} className={`mb-4 ${className}`} {...props}>
+    <div ref={ref} className={`mb-4 min-w-0 ${className}`} {...props}>
       {children}
     </div>
   );

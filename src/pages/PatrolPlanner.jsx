@@ -82,7 +82,7 @@ export function PatrolPlanner() {
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
           <Card padded={false}>
-            <div className="rounded-lg overflow-hidden border border-[var(--color-border)] h-[320px] sm:h-[420px] lg:h-[480px]">
+            <div className="rounded-lg overflow-hidden h-[60vh] min-h-[320px] max-h-[480px]">
               <MapContainer center={CENTER} zoom={12} style={{ height: '100%', width: '100%' }} aria-label="Patrol units and high-risk regions map">
                 <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 {hotspots.map((h) => (
@@ -118,14 +118,14 @@ export function PatrolPlanner() {
             <CardContent>
               <ul className="divide-y divide-[var(--color-border)]">
                 {nearby.map((u) => (
-                  <li key={u.unit_id} className="py-3 flex items-center gap-3 flex-wrap">
+                  <li key={u.unit_id} className="py-3 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
                     <Siren className="w-4 h-4 text-[var(--color-accent)] flex-shrink-0" aria-hidden="true" />
-                    <div className="flex-1 min-w-0 basis-40">
+                    <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-[var(--color-text-primary)]">{u.unit_id} · {u.unit_type}</p>
                       <p className="text-xs text-[var(--color-text-muted)]">{u.km} km away · ETA ~{u.etaMin} min (simulated) · {u.assigned_station}</p>
                     </div>
                     <Badge variant="success" size="sm">Available</Badge>
-                    <Button variant={deployed.includes(u.unit_id) ? 'secondary' : 'outline'} size="sm" className="w-full sm:w-auto min-h-[44px]"
+                    <Button variant={deployed.includes(u.unit_id) ? 'secondary' : 'outline'} size="sm" className="w-full sm:w-auto min-h-[36px] sm:min-h-[44px]"
                       onClick={() => setDeployed((d) => (d.includes(u.unit_id) ? d.filter((x) => x !== u.unit_id) : [...d, u.unit_id]))}>
                       {deployed.includes(u.unit_id) ? 'Assigned (simulated)' : 'Assign (simulated)'}
                     </Button>
@@ -164,12 +164,12 @@ export function PatrolPlanner() {
             <CardContent>
               <ul className="space-y-2 max-h-80 overflow-auto">
                 {services.units.map((u) => (
-                  <li key={u.unit_id} className="flex items-center gap-2 text-sm">
+                  <li key={u.unit_id} className="flex items-center gap-2 text-sm min-w-0">
                     <span className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                       style={{ background: u.availability_status === 'Available' ? '#16a34a' : u.availability_status === 'Busy' ? '#D71920' : '#9ca3af' }} aria-hidden="true" />
-                    <span className="font-medium text-[var(--color-text-primary)]">{u.unit_id}</span>
-                    <span className="text-[var(--color-text-muted)] truncate">{u.unit_type}</span>
-                    <span className="ml-auto text-xs text-[var(--color-text-muted)]">{u.availability_status}</span>
+                    <span className="font-medium text-[var(--color-text-primary)] flex-shrink-0">{u.unit_id}</span>
+                    <span className="text-[var(--color-text-muted)] truncate min-w-0 flex-1">{u.unit_type}</span>
+                    <span className="ml-auto text-xs text-[var(--color-text-muted)] flex-shrink-0">{u.availability_status}</span>
                   </li>
                 ))}
               </ul>

@@ -18,7 +18,7 @@ const Input = forwardRef(function Input({
   const hintId = `${id}-hint`;
 
   return (
-    <div className={className}>
+    <div className={`min-w-0 ${className}`}>
       {label && (
         <label htmlFor={id} className="block text-sm font-medium text-[var(--color-text-primary)] mb-2">
           {label}
@@ -55,7 +55,7 @@ const Input = forwardRef(function Input({
             {rightIcon}
           </div>
         )}
-        {props.value && !props.readOnly && !props.disabled && (
+        {props.value && !props.readOnly && !props.disabled && props.type !== 'date' && props.type !== 'password' && (
           <button
             type="button"
             onClick={(e) => {
@@ -100,7 +100,7 @@ const Select = forwardRef(function Select({
   const hintId = `${id}-hint`;
 
   return (
-    <div className={className}>
+    <div className={`min-w-0 ${className}`}>
       {label && (
         <label htmlFor={id} className="block text-sm font-medium text-[var(--color-text-primary)] mb-2">
           {label}
@@ -191,7 +191,7 @@ const MultiSelect = forwardRef(function MultiSelect({
   };
 
   return (
-    <div className={className} data-multiselect={id}>
+    <div className={`min-w-0 ${className}`} data-multiselect={id}>
       {label && (
         <label htmlFor={id} className="block text-sm font-medium text-[var(--color-text-primary)] mb-2">
           {label}
@@ -305,13 +305,13 @@ const DateRangePicker = forwardRef(function DateRangePicker({
   ...props 
 }, ref) {
   return (
-    <div className={className}>
+    <div className={`min-w-0 ${className}`}>
       {label && (
         <label className="block text-sm font-medium text-[var(--color-text-primary)] mb-2">
           {label}
         </label>
       )}
-      <div className="flex flex-col sm:flex-row gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3">
         <Input
           type="date"
           value={value[0] || ''}

@@ -23,16 +23,38 @@ import { RoleSwitcher } from './RoleSwitcher';
 import { useDemo } from '@/services/DemoContext';
 import { useAlerts } from '@/services/AlertContext';
 
+export const POLICE_LOGO_SRC = '/puducherry-police-logo.png';
+
+/** Puducherry Police crest with graceful fallback until the logo file is added. */
+export function PoliceLogo({ className = 'w-8 h-8' }) {
+  const [missing, setMissing] = useState(false);
+  if (missing) {
+    return (
+      <div className={`${className} rounded-md bg-[var(--color-navy-900)] flex items-center justify-center flex-shrink-0`}>
+        <LayoutIcon className="w-5 h-5 text-[var(--color-gold)]" aria-hidden="true" />
+      </div>
+    );
+  }
+  return (
+    <img
+      src={POLICE_LOGO_SRC}
+      alt="Puducherry Police crest"
+      className={`${className} object-contain flex-shrink-0`}
+      onError={() => setMissing(true)}
+    />
+  );
+}
+
 const NAV_ITEMS = [
-  { path: '/overview', label: 'Overview', icon: LayoutIcon, description: 'Problem, solution & capabilities' },
-  { path: '/dashboard', label: 'Dashboard', icon: BarChart3, description: 'KPIs, trends & alerts' },
-  { path: '/crime-map', label: 'Crime Map', icon: MapPin, description: 'Interactive map with search' },
-  { path: '/hotspots-risk', label: 'Hotspots & Risk', icon: AlertTriangle, description: 'Risk zones & predictions' },
-  { path: '/trends-time', label: 'Trends & Time', icon: TrendingUp, description: 'Temporal analysis & patrol windows' },
-  { path: '/patrol-planner', label: 'Patrol Planner', icon: Shield, description: 'Units, routes & deployment' },
-  { path: '/cases', label: 'Cases', icon: FileText, description: 'Searchable case management' },
-  { path: '/ai-assistant', label: 'AI Assistance', icon: Sparkles, description: 'Local AI model analysis & prediction' },
-  { path: '/system-ethics', label: 'System & Ethics', icon: Settings, description: 'Architecture & principles' }
+  { path: '/overview', label: 'Overview', shortLabel: 'Overview', icon: LayoutIcon, description: 'Problem, solution & capabilities' },
+  { path: '/dashboard', label: 'Dashboard', shortLabel: 'Dashboard', icon: BarChart3, description: 'KPIs, trends & alerts' },
+  { path: '/crime-map', label: 'Crime Map', shortLabel: 'Map', icon: MapPin, description: 'Interactive map with search' },
+  { path: '/hotspots-risk', label: 'Hotspots & Risk', shortLabel: 'Hotspots', icon: AlertTriangle, description: 'Risk zones & predictions' },
+  { path: '/trends-time', label: 'Trends & Time', shortLabel: 'Trends', icon: TrendingUp, description: 'Temporal analysis & patrol windows' },
+  { path: '/patrol-planner', label: 'Patrol Planner', shortLabel: 'Patrol', icon: Shield, description: 'Units, routes & deployment' },
+  { path: '/cases', label: 'Cases', shortLabel: 'Cases', icon: FileText, description: 'Searchable case management' },
+  { path: '/ai-assistant', label: 'AI Assistance', shortLabel: 'AI', icon: Sparkles, description: 'Local AI model analysis & prediction' },
+  { path: '/system-ethics', label: 'System & Ethics', shortLabel: 'Ethics', icon: Settings, description: 'Architecture & principles' }
 ];
 
 export function Header({ onMenuClick, onDemoClick }) {
@@ -40,38 +62,39 @@ export function Header({ onMenuClick, onDemoClick }) {
   const { active: demoActive } = useDemo();
 
   return (
-    <header className="fixed top-0 left-0 right-0 h-[var(--header-height)] bg-[var(--color-surface)] border-b border-[var(--color-border)] z-[var(--z-sticky)] flex items-center justify-between gap-2 px-4 lg:px-6">
-      <div className="flex items-center gap-3 min-w-0">
+    <header className="fixed top-0 left-0 right-0 h-[var(--header-height)] bg-[var(--color-surface)] border-b border-[var(--color-border)] z-[var(--z-sticky)] flex items-center justify-between gap-1.5 px-3 lg:px-4">
+      <div className="flex items-center gap-2 min-w-0">
         <Button variant="ghost" size="sm" onClick={onMenuClick} aria-label="Open navigation menu" className="lg:hidden flex-shrink-0">
           <Menu className="w-5 h-5" aria-hidden="true" />
         </Button>
         <Link to="/overview" className="flex items-center gap-2 flex-shrink-0" aria-label="CRIMEMAP home">
-          <div className="w-8 h-8 rounded-md bg-[var(--color-navy-900)] flex items-center justify-center">
-            <LayoutIcon className="w-5 h-5 text-[var(--color-gold)]" aria-hidden="true" />
-          </div>
-          <span className="font-bold text-lg text-[var(--color-navy-900)] hidden sm:block">CRIMEMAP</span>
+          <PoliceLogo className="w-9 h-9" />
+          <span className="hidden sm:block leading-none">
+            <span className="block font-bold text-base text-[var(--color-navy-900)] tracking-wide">CRIMEMAP</span>
+            <span className="hidden md:block text-[9px] font-medium tracking-[0.18em] text-[var(--color-text-muted)] mt-0.5">MAP • ANALYSE • PLAN • PREVENT</span>
+          </span>
         </Link>
-        <nav className="hidden lg:flex items-center gap-0.5 border-l border-[var(--color-border)] pl-3 ml-1" aria-label="Primary">
+        <nav className="hidden lg:flex items-center gap-0 border-l border-[var(--color-border)] pl-2 ml-1 whitespace-nowrap flex-shrink-0" aria-label="Primary">
           {NAV_ITEMS.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}
               title={item.description}
               className={({ isActive }) => `
-                px-2.5 py-2 rounded-md text-[13px] font-medium transition-colors whitespace-nowrap
+                px-2 py-1.5 rounded-md text-xs font-medium transition-colors whitespace-nowrap
                 ${isActive
                   ? 'bg-[var(--color-accent-light)] text-[var(--color-accent)]'
                   : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-navy-50)]'
                 }
               `}
             >
-              {item.label}
+              {item.shortLabel}
             </NavLink>
           ))}
         </nav>
       </div>
 
-      <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+      <div className="flex items-center gap-1 sm:gap-1.5 flex-shrink-0">
         {demoActive && (
           <Badge variant="gold" dot className="hidden md:inline-flex">
             Guided Demo
@@ -90,7 +113,7 @@ export function Header({ onMenuClick, onDemoClick }) {
             onClick={() => setPanelOpen(!panelOpen)}
             aria-label={unreadCount > 0 ? `${unreadCount} unread alerts — open alerts` : 'Open alerts'}
             aria-expanded={panelOpen}
-            leftIcon={<Bell className="w-5 h-5" aria-hidden="true" />}
+            leftIcon={<Bell className="w-4 h-4" aria-hidden="true" />}
           >
             {unreadCount > 0 && (
               <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1 bg-[var(--color-crime-assault)] text-white text-xs rounded-full flex items-center justify-center">
@@ -137,11 +160,12 @@ export function Sidebar({ open, onClose }) {
       >
         <div className="flex flex-col h-full">
           <div className="h-[var(--header-height)] flex items-center justify-between px-4 border-b border-[var(--color-border)]">
-            <span className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-md bg-[var(--color-accent)] flex items-center justify-center">
-                <LayoutIcon className="w-5 h-5 text-white" aria-hidden="true" />
-              </div>
-              <span className="font-bold text-lg text-[var(--color-navy-900)]">CRIMEMAP</span>
+            <span className="flex items-center gap-2 min-w-0">
+              <PoliceLogo className="w-9 h-9" />
+              <span className="leading-none">
+                <span className="block font-bold text-base text-[var(--color-navy-900)] tracking-wide">CRIMEMAP</span>
+                <span className="block text-[8px] font-medium tracking-[0.18em] text-[var(--color-text-muted)] mt-0.5">MAP • ANALYSE • PLAN • PREVENT</span>
+              </span>
             </span>
             <Button variant="ghost" size="sm" onClick={onClose} aria-label="Close navigation">
               <X className="w-5 h-5" aria-hidden="true" />
@@ -190,11 +214,20 @@ export function Layout() {
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[var(--z-tooltip)] focus:bg-white focus:px-3 focus:py-2 focus:rounded">
         Skip to main content
       </a>
+      {/* Faint Puducherry Police watermark blended behind every page */}
+      <div className="fixed inset-0 z-0 flex items-center justify-center pointer-events-none no-print" aria-hidden="true">
+        <img
+          src={POLICE_LOGO_SRC}
+          alt=""
+          className="w-[72vmin] max-w-[560px] object-contain opacity-[0.05] select-none"
+          onError={(e) => { e.currentTarget.style.display = 'none'; }}
+        />
+      </div>
       <Header
         onMenuClick={() => setSidebarOpen(true)}
         onDemoClick={demoActive ? exitDemo : startDemo}
       />
-      <div className="flex flex-1 pt-[var(--header-height)]">
+      <div className="relative z-10 flex flex-1 pt-[var(--header-height)]">
         <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         <main className="flex-1 min-w-0" id="main-content" role="main" tabIndex={-1}>
           <Outlet />

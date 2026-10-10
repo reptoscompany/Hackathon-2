@@ -54,7 +54,7 @@ export function TrendsTime() {
         <p className="text-[var(--color-text-secondary)]">When crime happens — every figure computed from the sample data</p>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2 items-stretch">
         <Card>
           <CardHeader>
             <CardTitle>Monthly trend with festival markers (sample)</CardTitle>
@@ -126,7 +126,7 @@ export function TrendsTime() {
           <CardDescription>Ward rows × 2-hour columns. Darker = more incidents. Values labeled directly.</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto -mx-1 px-1">
+          <div className="overflow-x-auto">
             <div className="min-w-[560px]">
               <Chart height={340} option={createHeatmapOption(model.heat, { xLabels: HOUR_BLOCKS, yLabels: model.wards })} />
             </div>

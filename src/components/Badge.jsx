@@ -44,7 +44,7 @@ const Badge = forwardRef(function Badge({
     <span
       ref={ref}
       className={`
-        inline-flex items-center gap-1.5 font-medium rounded-full
+        inline-flex items-center gap-1.5 font-medium rounded-full whitespace-nowrap max-w-full overflow-hidden text-ellipsis shrink-0
         ${variants[variant]} ${sizes[size]} ${className}
       `}
       {...props}

@@ -28,7 +28,7 @@ export function GuidedDemo() {
 
   return (
     <div
-      className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[var(--z-modal)] w-[min(44rem,calc(100vw-2rem))] no-print"
+      className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[var(--z-modal)] w-[min(44rem,calc(100vw-2rem))] max-h-[50vh] overflow-auto no-print"
       role="dialog"
       aria-live="polite"
       aria-label={`Guided demo step ${currentStep + 1} of ${totalSteps}`}

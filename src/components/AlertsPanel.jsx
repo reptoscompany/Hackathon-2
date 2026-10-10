@@ -30,7 +30,7 @@ export function AlertsPanel({ onClose }) {
           </Button>
         </div>
       </div>
-      <div className="max-h-96 overflow-auto p-2">
+      <div className="max-h-[70vh] overflow-auto p-2">
         {alerts.length === 0 ? (
           <p className="px-4 py-8 text-center text-[var(--color-text-muted)] text-sm">
             No active alerts. Alerts trigger on sharp increases, new high-severity incidents, hotspot thresholds, and urgent patrol needs.

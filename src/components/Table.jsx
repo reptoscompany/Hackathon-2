@@ -91,7 +91,7 @@ const Table = forwardRef(function Table({
   const selectedCount = selectionMode ? (onSelectionChange ? selectedRows.length : localSelection.size) : 0;
 
   return (
-    <div ref={ref} className={`${className} overflow-hidden`}>
+    <div ref={ref} className={`${className} overflow-hidden min-w-0`}>
       {(selectionMode && selectedCount > 0) && (
         <div className="mb-3 flex items-center justify-between p-3 bg-[var(--color-accent-light)] rounded-md border border-[var(--color-accent)]/20">
           <span className="text-sm font-medium text-[var(--color-accent)]">
@@ -106,7 +106,7 @@ const Table = forwardRef(function Table({
         </div>
       )}
       
-      <div className="overflow-x-auto -mx-1 px-1">
+      <div className="overflow-x-auto">
         <table className="w-full min-w-max" role="grid" {...props}>
           <thead>
             <tr className="bg-[var(--color-navy-50)]">

@@ -178,7 +178,7 @@ const Drawer = forwardRef(function Drawer({
   const drawerContent = (
     <div
       className={`
-        fixed inset-0 ${positions[position]} z-[var(--z-modal)] flex
+        fixed inset-0 z-[var(--z-modal)] flex ${position === 'right' ? 'justify-end' : 'justify-start'}
         bg-black/50 backdrop-blur-sm animate-fade-in
       `}
       role="dialog"
@@ -191,7 +191,7 @@ const Drawer = forwardRef(function Drawer({
         ref={drawerRef}
         tabIndex={-1}
         className={`
-          flex-1 flex flex-col ${sizes[size]} bg-[var(--color-surface)] shadow-xl
+          flex flex-col shrink-0 h-full ${sizes[size]} bg-[var(--color-surface)] shadow-xl
           animate-slide-in-${position === 'right' ? 'right' : 'left'} max-h-full
           ${className}
         `}

@@ -27,8 +27,8 @@ const KPICard = forwardRef(function KPICard({
     <div
       ref={ref}
       className={`
-        bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-4 sm:p-6
-        transition-shadow hover:shadow-md min-w-0
+        bg-[var(--color-surface)] border border-[var(--color-border)] border-t-4 border-t-[var(--color-gold)] rounded-lg p-4 sm:p-6
+        transition-shadow hover:shadow-md min-w-0 h-full
         ${className}
       `}
       {...props}

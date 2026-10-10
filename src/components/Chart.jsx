@@ -96,7 +96,7 @@ const Chart = ({
   }), [onClick, onDataZoom]);
 
   return (
-    <div className={`relative ${className}`} style={{ height, width: '100%', ...style }} role="img" aria-label={option.title?.text || 'Chart'}>
+    <div className={`relative min-w-0 overflow-hidden ${className}`} style={{ height, width: '100%', ...style }} role="img" aria-label={option.title?.text || 'Chart'}>
       <ReactECharts
         ref={chartRef}
         option={mergedOption}
