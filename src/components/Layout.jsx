@@ -23,9 +23,9 @@ import { RoleSwitcher } from './RoleSwitcher';
 import { useDemo } from '@/services/DemoContext';
 import { useAlerts } from '@/services/AlertContext';
 
-export const POLICE_LOGO_SRC = '/puducherry-police-logo.png';
+export const POLICE_LOGO_SRC = '/puducherry-police-logo.svg';
 
-/** Puducherry Police crest with graceful fallback until the logo file is added. */
+/** Puducherry Police crest (vector rendition of the issued patch). */
 export function PoliceLogo({ className = 'w-8 h-8' }) {
   const [missing, setMissing] = useState(false);
   if (missing) {
