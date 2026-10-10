@@ -79,6 +79,7 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior-y: none;
 }
 
 body {
@@ -89,6 +90,20 @@ body {
   background-color: var(--color-bg);
   font-variant-numeric: var(--font-variant-numeric);
   min-height: 100vh;
+  overflow-x: clip;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Larger tap targets on touch, no double-tap zoom delay */
+button, a, [role="button"] {
+  touch-action: manipulation;
+}
+
+input[type="range"] {
+  min-height: var(--min-touch, 44px);
+  touch-action: manipulation;
+  width: 100%;
 }
 
 #root {

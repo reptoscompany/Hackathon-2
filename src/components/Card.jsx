@@ -11,9 +11,9 @@ const Card = forwardRef(function Card({
     <div
       ref={ref}
       className={`
-        bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg
+        bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg min-w-0 overflow-hidden
         ${elevated ? 'shadow-md' : 'shadow-sm'}
-        ${padded ? 'p-6' : ''}
+        ${padded ? 'p-4 sm:p-6' : ''}
         ${className}
       `}
       {...props}
@@ -63,7 +63,7 @@ CardContent.displayName = 'CardContent';
 
 const CardFooter = forwardRef(function CardFooter({ children, className = '', ...props }, ref) {
   return (
-    <div ref={ref} className={`mt-4 pt-4 border-t border-[var(--color-border)] flex items-center gap-3 ${className}`} {...props}>
+    <div ref={ref} className={`mt-4 pt-4 border-t border-[var(--color-border)] flex items-center gap-3 flex-wrap ${className}`} {...props}>
       {children}
     </div>
   );

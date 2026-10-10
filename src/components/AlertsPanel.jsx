@@ -15,7 +15,7 @@ export function AlertsPanel({ onClose }) {
   const { alerts, markRead, markAllRead, dismiss } = useAlerts();
 
   return (
-    <div className="absolute right-0 top-full mt-2 w-[22rem] max-w-[90vw] bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg shadow-xl z-[var(--z-dropdown)]">
+    <div className="fixed left-4 right-4 top-[var(--header-height)] sm:absolute sm:left-auto sm:right-0 sm:top-full mt-2 sm:w-[22rem] bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg shadow-xl z-[var(--z-dropdown)]">
       <div className="p-4 border-b border-[var(--color-border)] flex items-center justify-between">
         <h3 className="font-semibold text-[var(--color-text-primary)] flex items-center gap-2">
           <Bell className="w-4 h-4" aria-hidden="true" /> Alerts
@@ -53,25 +53,25 @@ export function AlertsPanel({ onClose }) {
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-[var(--color-text-primary)]">{alert.title}</p>
                       <p className="text-xs text-[var(--color-text-secondary)] mt-0.5">{alert.message}</p>
-                      <div className="mt-2 flex items-center gap-2">
+                      <div className="mt-2 flex items-center gap-2 flex-wrap">
                         <Link
                           to={meta.route}
                           onClick={() => { markRead(alert.id); onClose?.(); }}
-                          className="text-xs font-medium text-[var(--color-accent)] hover:underline"
+                          className="text-xs font-medium text-[var(--color-accent)] hover:underline py-2 min-h-[44px] inline-flex items-center"
                         >
                           View in {meta.label}
                         </Link>
                         <button
                           type="button"
                           onClick={() => markRead(alert.id)}
-                          className="text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]"
+                          className="text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] py-2 px-1 min-h-[44px]"
                         >
                           Mark read
                         </button>
                         <button
                           type="button"
                           onClick={() => dismiss(alert.id)}
-                          className="text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]"
+                          className="text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] py-2 px-1 min-h-[44px]"
                         >
                           Dismiss
                         </button>

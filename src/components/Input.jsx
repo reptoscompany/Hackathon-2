@@ -36,7 +36,7 @@ const Input = forwardRef(function Input({
           className={`
             w-full rounded-md border transition-colors duration-150
             ${leftIcon ? 'pl-10' : 'px-3'} ${rightIcon ? 'pr-10' : 'px-3'}
-            py-2 text-sm
+            py-2 min-h-[44px] text-base sm:text-sm
             bg-[var(--color-surface)] text-[var(--color-text-primary)]
             placeholder:text-[var(--color-text-muted)]
             ${error 
@@ -112,7 +112,7 @@ const Select = forwardRef(function Select({
           id={id}
           className={`
             w-full rounded-md border appearance-none transition-colors duration-150
-            px-3 py-2 pr-10 text-sm
+            px-3 py-2 pr-10 min-h-[44px] text-base sm:text-sm
             bg-[var(--color-surface)] text-[var(--color-text-primary)]
             ${error 
               ? 'border-[var(--color-crime-assault)] focus:border-[var(--color-crime-assault)] focus:ring-[var(--color-crime-assault)]/20' 
@@ -205,7 +205,7 @@ const MultiSelect = forwardRef(function MultiSelect({
           onClick={() => setOpen(!open)}
           className={`
             w-full rounded-md border transition-colors duration-150 text-left
-            px-3 py-2 pr-10 text-sm
+            px-3 py-2 pr-10 min-h-[44px] text-base sm:text-sm
             bg-[var(--color-surface)] text-[var(--color-text-primary)]
             ${error 
               ? 'border-[var(--color-crime-assault)] focus:border-[var(--color-crime-assault)] focus:ring-[var(--color-crime-assault)]/20' 
@@ -255,7 +255,7 @@ const MultiSelect = forwardRef(function MultiSelect({
                   type="button"
                   onClick={() => toggleOption(opt.value)}
                   className={`
-                    w-full px-3 py-2 text-sm text-left transition-colors
+                    w-full px-3 py-3 min-h-[44px] text-sm text-left transition-colors
                     ${value.includes(opt.value) 
                       ? 'bg-[var(--color-accent-light)] text-[var(--color-accent)]' 
                       : 'hover:bg-[var(--color-navy-50)] text-[var(--color-text-primary)]'
@@ -311,7 +311,7 @@ const DateRangePicker = forwardRef(function DateRangePicker({
           {label}
         </label>
       )}
-      <div className="flex gap-3">
+      <div className="flex flex-col sm:flex-row gap-3">
         <Input
           type="date"
           value={value[0] || ''}

@@ -68,16 +68,16 @@ export function Overview() {
           <Info className="w-4 h-4" aria-hidden="true" />
           <span>Prototype — Simulated Data</span>
         </div>
-        <h1 className="text-4xl sm:text-5xl font-bold text-[var(--color-navy-900)] tracking-tight">
+        <h1 className="text-3xl sm:text-5xl font-bold text-[var(--color-navy-900)] tracking-tight break-words">
           CRIMEMAP
         </h1>
-        <p className="text-xl text-[var(--color-text-secondary)] max-w-3xl mx-auto">
+        <p className="text-lg sm:text-xl text-[var(--color-text-secondary)] max-w-3xl mx-auto">
           Geospatial Crime Intelligence, Analytics & Decision-Support System
         </p>
         <p className="text-base text-[var(--color-text-muted)] max-w-2xl mx-auto">
           A GIS-based platform that combines interactive maps, analytics, and machine-learning risk estimation to help police see where, when, and what kind of crime is happening — and how to deploy resources.
         </p>
-        <div className="flex items-center justify-center gap-4 pt-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-4">
           <Button size="lg" onClick={startDemo} leftIcon={<Zap className="w-5 h-5" aria-hidden="true" />}>
             Start Guided Demo
           </Button>
@@ -97,7 +97,7 @@ export function Overview() {
             <p className="text-[var(--color-text-secondary)] mt-1">Why existing approaches fall short</p>
           </div>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {problemPoints.map((point, i) => (
             <Card key={i} className="animate-slide-up" style={{ animationDelay: `${i * 100}ms` }}>
               <CardContent className="flex gap-3">
@@ -117,7 +117,7 @@ export function Overview() {
             <p className="text-[var(--color-text-secondary)] mt-1">How CRIMEMAP addresses the gaps</p>
           </div>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {solutionPoints.map((point, i) => (
             <Card key={i} className="animate-slide-up" style={{ animationDelay: `${i * 100}ms` }}>
               <CardContent className="flex gap-3">
@@ -186,7 +186,7 @@ export function Overview() {
           </div>
         </div>
         <Card>
-          <CardContent className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <CardContent className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {ethicalPrinciples.map((principle, i) => (
               <div key={i} className="flex gap-3">
                 <Shield className="w-5 h-5 text-[var(--color-accent)] flex-shrink-0 mt-0.5" aria-hidden="true" />

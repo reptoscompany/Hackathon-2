@@ -68,8 +68,8 @@ const Modal = forwardRef(function Modal({
   const modalContent = (
     <div
       className={`
-        fixed inset-0 z-[var(--z-modal)] flex items-center justify-center p-4
-        bg-black/50 backdrop-blur-sm animate-fade-in
+        fixed inset-0 z-[var(--z-modal)] flex items-end sm:items-center justify-center p-4
+        bg-black/50 backdrop-blur-sm animate-fade-in overflow-y-auto
       `}
       role="dialog"
       aria-modal="true"
@@ -89,7 +89,7 @@ const Modal = forwardRef(function Modal({
         {...props}
       >
         {(title || showClose) && (
-          <div className="flex items-start justify-between p-6 border-b border-[var(--color-border)]">
+          <div className="flex items-start justify-between p-4 sm:p-6 border-b border-[var(--color-border)]">
             <div>
               {title && (
                 <h2 id="modal-title" className="text-lg font-semibold text-[var(--color-text-primary)]">
@@ -115,7 +115,7 @@ const Modal = forwardRef(function Modal({
             )}
           </div>
         )}
-        <div className="flex-1 overflow-auto p-6">
+        <div className="flex-1 overflow-auto p-4 sm:p-6">
           {children}
         </div>
       </div>
@@ -163,10 +163,10 @@ const Drawer = forwardRef(function Drawer({
   if (!open) return null;
 
   const sizes = {
-    sm: 'w-72',
-    md: 'w-96',
-    lg: 'w-[480px]',
-    xl: 'w-[600px]',
+    sm: 'w-[calc(100vw-2rem)] sm:w-72 max-w-full',
+    md: 'w-[calc(100vw-2rem)] sm:w-96 max-w-full',
+    lg: 'w-[calc(100vw-2rem)] sm:w-[480px] max-w-full',
+    xl: 'w-[calc(100vw-2rem)] sm:w-[600px] max-w-full',
     full: 'w-full max-w-full'
   };
 
@@ -178,7 +178,7 @@ const Drawer = forwardRef(function Drawer({
   const drawerContent = (
     <div
       className={`
-        fixed inset-y-0 ${positions[position]} z-[var(--z-modal)] flex
+        fixed inset-0 ${positions[position]} z-[var(--z-modal)] flex
         bg-black/50 backdrop-blur-sm animate-fade-in
       `}
       role="dialog"
@@ -198,7 +198,7 @@ const Drawer = forwardRef(function Drawer({
         {...props}
       >
         {(title || description) && (
-          <div className="flex items-start justify-between p-6 border-b border-[var(--color-border)] flex-shrink-0">
+          <div className="flex items-start justify-between p-4 sm:p-6 border-b border-[var(--color-border)] flex-shrink-0">
             <div>
               {title && (
                 <h2 id="drawer-title" className="text-lg font-semibold text-[var(--color-text-primary)]">
@@ -216,7 +216,7 @@ const Drawer = forwardRef(function Drawer({
             </Button>
           </div>
         )}
-        <div className="flex-1 overflow-auto p-6">
+        <div className="flex-1 overflow-auto p-4 sm:p-6">
           {children}
         </div>
       </div>

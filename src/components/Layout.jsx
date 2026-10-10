@@ -104,8 +104,9 @@ export function Header({ onMenuClick, onDemoClick }) {
           onClick={onDemoClick}
           leftIcon={demoActive ? <X className="w-4 h-4" aria-hidden="true" /> : <HelpCircle className="w-4 h-4" aria-hidden="true" />}
           className="no-print"
+          aria-label={demoActive ? 'Exit guided demo' : 'Start guided demo'}
         >
-          {demoActive ? 'Exit Demo' : 'Guided Demo'}
+          <span className="hidden sm:inline">{demoActive ? 'Exit Demo' : 'Guided Demo'}</span>
         </Button>
       </div>
     </header>
@@ -124,7 +125,7 @@ export function Sidebar({ open, onClose }) {
       )}
       <aside
         className={`
-          fixed top-0 left-0 z-[var(--z-fixed)] h-full w-72 bg-[var(--color-surface)] border-r border-[var(--color-border)]
+          fixed top-0 left-0 z-[var(--z-fixed)] h-full w-72 max-w-[85vw] bg-[var(--color-surface)] border-r border-[var(--color-border)]
           transition-transform duration-300 ease-out lg:hidden
           ${open ? 'translate-x-0' : '-translate-x-full'}
         `}
@@ -183,7 +184,7 @@ export function Layout() {
   const { active: demoActive, startDemo, exitDemo } = useDemo();
 
   return (
-    <div className="min-h-screen bg-[var(--color-bg)] flex flex-col">
+    <div className="min-h-screen bg-[var(--color-bg)] flex flex-col overflow-x-clip">
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[var(--z-tooltip)] focus:bg-white focus:px-3 focus:py-2 focus:rounded">
         Skip to main content
       </a>

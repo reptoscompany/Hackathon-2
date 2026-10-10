@@ -19,7 +19,7 @@ const Button = forwardRef(function Button({
     transition-colors duration-150 ease-out
     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
     disabled:opacity-50 disabled:cursor-not-allowed
-    select-none
+    select-none touch-manipulation min-h-[36px] min-w-[36px]
   `;
 
   const variants = {

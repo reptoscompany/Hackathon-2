@@ -112,7 +112,7 @@ export function TrendsTime() {
           </CardHeader>
           <CardContent>
             <Chart height={260} option={createBarChartOption(services.charts.dayCounts, { xKey: 'day', yKeys: ['count'], labels: { count: 'Incidents' }, showLegend: false })} />
-            <div className="mt-2 flex gap-2">
+            <div className="mt-2 flex gap-2 flex-wrap">
               <Badge variant="gray">Weekday share: {(model.weekday / (model.weekday + model.weekend) * 100).toFixed(0)}%</Badge>
               <Badge variant="warning">Weekend share: {(model.weekend / (model.weekday + model.weekend) * 100).toFixed(0)}%</Badge>
             </div>
@@ -126,7 +126,11 @@ export function TrendsTime() {
           <CardDescription>Ward rows × 2-hour columns. Darker = more incidents. Values labeled directly.</CardDescription>
         </CardHeader>
         <CardContent>
-          <Chart height={340} option={createHeatmapOption(model.heat, { xLabels: HOUR_BLOCKS, yLabels: model.wards })} />
+          <div className="overflow-x-auto -mx-1 px-1">
+            <div className="min-w-[560px]">
+              <Chart height={340} option={createHeatmapOption(model.heat, { xLabels: HOUR_BLOCKS, yLabels: model.wards })} />
+            </div>
+          </div>
         </CardContent>
       </Card>
 

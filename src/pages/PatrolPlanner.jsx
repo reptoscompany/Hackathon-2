@@ -68,10 +68,10 @@ export function PatrolPlanner() {
             {available} available · {busy} busy · {services.units.length - available - busy} offline (simulated) · response times simulated at 28 km/h urban speed + 2 min dispatch
           </p>
         </div>
-        <div className="flex items-center gap-2 no-print">
+        <div className="flex items-center gap-2 flex-wrap no-print">
           <Select value={focusWard} onChange={(e) => setFocusWard(e.target.value)}
             options={[{ value: '', label: 'Highest-risk ward' }, ...hotspots.map((h) => ({ value: h.ward, label: `${h.ward} (${h.level})` }))]}
-            className="w-64" aria-label="Focus ward" />
+            className="w-full sm:w-64" aria-label="Focus ward" />
           <ExportMenu filename="deployment-plan.csv" rows={nearby} columns={[
             { key: 'unit_id', header: 'unit_id' }, { key: 'unit_type', header: 'unit_type' },
             { key: 'availability_status', header: 'status' }, { key: 'km', header: 'distance_km' }, { key: 'etaMin', header: 'eta_min_simulated' }
@@ -82,7 +82,7 @@ export function PatrolPlanner() {
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
           <Card padded={false}>
-            <div className="rounded-lg overflow-hidden border border-[var(--color-border)]" style={{ height: '480px' }}>
+            <div className="rounded-lg overflow-hidden border border-[var(--color-border)] h-[320px] sm:h-[420px] lg:h-[480px]">
               <MapContainer center={CENTER} zoom={12} style={{ height: '100%', width: '100%' }} aria-label="Patrol units and high-risk regions map">
                 <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 {hotspots.map((h) => (
@@ -118,14 +118,14 @@ export function PatrolPlanner() {
             <CardContent>
               <ul className="divide-y divide-[var(--color-border)]">
                 {nearby.map((u) => (
-                  <li key={u.unit_id} className="py-2.5 flex items-center gap-3">
+                  <li key={u.unit_id} className="py-3 flex items-center gap-3 flex-wrap">
                     <Siren className="w-4 h-4 text-[var(--color-accent)] flex-shrink-0" aria-hidden="true" />
-                    <div className="flex-1 min-w-0">
+                    <div className="flex-1 min-w-0 basis-40">
                       <p className="text-sm font-medium text-[var(--color-text-primary)]">{u.unit_id} · {u.unit_type}</p>
                       <p className="text-xs text-[var(--color-text-muted)]">{u.km} km away · ETA ~{u.etaMin} min (simulated) · {u.assigned_station}</p>
                     </div>
                     <Badge variant="success" size="sm">Available</Badge>
-                    <Button variant={deployed.includes(u.unit_id) ? 'secondary' : 'outline'} size="sm"
+                    <Button variant={deployed.includes(u.unit_id) ? 'secondary' : 'outline'} size="sm" className="w-full sm:w-auto min-h-[44px]"
                       onClick={() => setDeployed((d) => (d.includes(u.unit_id) ? d.filter((x) => x !== u.unit_id) : [...d, u.unit_id]))}>
                       {deployed.includes(u.unit_id) ? 'Assigned (simulated)' : 'Assign (simulated)'}
                     </Button>

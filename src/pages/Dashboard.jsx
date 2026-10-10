@@ -117,7 +117,7 @@ export function Dashboard() {
           <DateRangePicker
             value={filters.dateRange}
             onChange={(v) => handleFilterChange('dateRange', v)}
-            className="w-[360px]"
+            className="w-full sm:w-[360px] max-w-full"
           />
           {hasActiveFilters && (
             <Button variant="ghost" size="sm" onClick={clearFilters} leftIcon={<X className="w-4 h-4" aria-hidden="true" />}>
@@ -174,7 +174,7 @@ export function Dashboard() {
         <div className="lg:col-span-2 space-y-6">
           {/* Trend Chart */}
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
+            <CardHeader className="flex flex-row items-center justify-between flex-wrap gap-2">
               <CardTitle>Incident Trend (Last 12 Months)</CardTitle>
               <Badge variant="gray" size="sm">Monthly</Badge>
             </CardHeader>
@@ -202,14 +202,14 @@ export function Dashboard() {
               <CardContent>
                 <div className="space-y-3 max-h-64 overflow-auto">
                   {services.charts.topAreas.slice(0, 8).map((area, i) => (
-                    <div key={i} className="flex items-center justify-between py-2 border-b border-[var(--color-border)] last:border-0">
-                      <div className="flex items-center gap-3">
-                        <span className="w-6 text-center text-[var(--color-text-muted)] text-sm font-medium">{i + 1}</span>
-                        <span className="text-sm text-[var(--color-text-primary)] truncate max-w-[200px]">{area.area}</span>
+                    <div key={i} className="flex items-center justify-between gap-2 py-2 border-b border-[var(--color-border)] last:border-0">
+                      <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                        <span className="w-6 text-center text-[var(--color-text-muted)] text-sm font-medium flex-shrink-0">{i + 1}</span>
+                        <span className="text-sm text-[var(--color-text-primary)] truncate max-w-[120px] sm:max-w-[200px]">{area.area}</span>
                       </div>
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
                         <span className="text-sm font-mono tabular-nums text-[var(--color-text-primary)]">{area.count}</span>
-                        <div className="w-24 h-2 bg-[var(--color-navy-100)] rounded-full overflow-hidden">
+                        <div className="w-16 sm:w-24 h-2 bg-[var(--color-navy-100)] rounded-full overflow-hidden">
                           <div 
                             className="h-full bg-[var(--color-accent)] rounded-full" 
                             style={{ width: `${(area.count / services.charts.topAreas[0]?.count) * 100}%` }}
@@ -308,7 +308,7 @@ export function Dashboard() {
             <CardContent>
               <div className="space-y-3">
                 {chartData.types.map((type, i) => (
-                  <div key={i} className="flex items-center gap-3">
+                  <div key={i} className="flex items-center gap-2 sm:gap-3 flex-wrap">
                     <Badge 
                       variant={type.type.toLowerCase().includes('assault') ? 'danger' : 
                                type.type.toLowerCase().includes('theft') ? 'info' :
@@ -316,7 +316,7 @@ export function Dashboard() {
                                type.type.toLowerCase().includes('cyber') ? 'purple' :
                                type.type.toLowerCase().includes('missing') ? 'orange' : 'success'} 
                       size="sm"
-                      className="w-24 text-center"
+                      className="w-20 sm:w-24 text-center truncate"
                     >
                       {type.type}
                     </Badge>
@@ -343,7 +343,7 @@ export function Dashboard() {
       </div>
 
       {/* Prototype disclaimer */}
-      <div className="fixed bottom-4 right-4 text-xs text-[var(--color-text-muted)] bg-[var(--color-surface)] px-3 py-1.5 rounded border border-[var(--color-border)] shadow-sm">
+      <div className="hidden sm:block fixed bottom-4 right-4 text-xs text-[var(--color-text-muted)] bg-[var(--color-surface)] px-3 py-1.5 rounded border border-[var(--color-border)] shadow-sm">
         Prototype — Simulated Data
       </div>
     </div>

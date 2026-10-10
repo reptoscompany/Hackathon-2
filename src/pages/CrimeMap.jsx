@@ -207,7 +207,7 @@ export function CrimeMap() {
             Assumption: blue = Theft (PDF text garbled)
           </p>
         </div>
-        <div className="flex items-center gap-2 no-print">
+        <div className="flex items-center gap-2 flex-wrap no-print">
           <Button variant={filtersOpen ? 'secondary' : 'outline'} size="sm" onClick={() => setFiltersOpen((o) => !o)} leftIcon={<Filter className="w-4 h-4" aria-hidden="true" />}>
             Filters
           </Button>
@@ -245,7 +245,7 @@ export function CrimeMap() {
                 <Select label="District" value={filters.district} onChange={(e) => setFilters((f) => ({ ...f, district: e.target.value }))} options={[{ value: '', label: 'All districts' }, ...services.getUniqueDistricts().map((d) => ({ value: d, label: d }))]} />
                 <Select label="Police station" value={filters.station} onChange={(e) => setFilters((f) => ({ ...f, station: e.target.value }))} options={[{ value: '', label: 'All stations' }, ...services.getUniqueStations().map((s) => ({ value: s, label: s }))]} />
                 <Select label="Ward" value={filters.ward} onChange={(e) => setFilters((f) => ({ ...f, ward: e.target.value }))} options={[{ value: '', label: 'All wards' }, ...services.getUniqueWards().map((w) => ({ value: w, label: w }))]} />
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   <Input type="date" label="From" value={filters.from} onChange={(e) => setFilters((f) => ({ ...f, from: e.target.value }))} />
                   <Input type="date" label="To" value={filters.to} onChange={(e) => setFilters((f) => ({ ...f, to: e.target.value }))} />
                 </div>
@@ -281,7 +281,7 @@ export function CrimeMap() {
 
         {/* Map */}
         <div className="flex-1 min-w-0">
-          <div className="rounded-lg overflow-hidden border border-[var(--color-border)]" style={{ height: '560px' }}>
+          <div className="rounded-lg overflow-hidden border border-[var(--color-border)] h-[320px] sm:h-[420px] lg:h-[560px]">
             <MapContainer center={CENTER} zoom={12} style={{ height: '100%', width: '100%' }} aria-label="Interactive crime map of Puducherry area">
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -375,7 +375,7 @@ export function CrimeMap() {
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <Button size="sm" onClick={() => runSearch()} leftIcon={<Search className="w-4 h-4" aria-hidden="true" />}>Run search</Button>
-                  <Button variant="outline" size="sm" onClick={() => runSearch({ mode: 'railway', lat: String(RAILWAY.lat), lng: String(RAILWAY.lng), radiusKm: '2', crimeType: '', from: '', to: '' })} leftIcon={<Crosshair className="w-4 h-4" aria-hidden="true" />}>
+                  <Button variant="outline" size="sm" onClick={() => runSearch({ mode: 'railway', lat: String(RAILWAY.lat), lng: String(RAILWAY.lng), radiusKm: '2', crimeType: '', from: '', to: '' })} leftIcon={<Crosshair className="w-4 h-4" aria-hidden="true" />} className="w-full sm:w-auto text-left">
                     Example: 2 km of railway station, last 6 months
                   </Button>
                   <Button variant="ghost" size="sm" onClick={() => setTechOpen((o) => !o)}>
@@ -415,7 +415,7 @@ export function CrimeMap() {
                   {(clusters ? [] : visibleMarkers.slice(0, 60)).map((i) => (
                     <li key={i.incident_id}>
                       <button type="button" onClick={() => setSelected(i)}
-                        className="w-full flex items-center gap-3 py-2 text-left hover:bg-[var(--color-navy-50)] rounded px-2">
+                        className="w-full flex items-center gap-3 py-3 min-h-[44px] text-left hover:bg-[var(--color-navy-50)] rounded px-2">
                         <span className="w-3 h-3 rounded-full flex-shrink-0" style={{ background: crimeColor(i.crime_type) }} aria-hidden="true" />
                         <span className="flex-1 min-w-0">
                           <span className="block text-sm font-medium text-[var(--color-text-primary)] truncate">{i.crime_type} · {i.case_number}</span>
@@ -442,9 +442,9 @@ export function CrimeMap() {
               ['Police station', shown.police_station], ['District / ward', `${shown.district} · ${shown.ward}`],
               ['Status', shown.status], ['Severity', `${(shown.severity * 100).toFixed(0)}%`],
               ['Coordinates', `${shown.latitude}, ${shown.longitude}`]].map(([k, v]) => (
-              <div key={k} className="flex justify-between gap-4 border-b border-[var(--color-border)] pb-2">
-                <dt className="text-[var(--color-text-secondary)]">{k}</dt>
-                <dd className="font-medium text-[var(--color-text-primary)] text-right">{v}</dd>
+              <div key={k} className="flex justify-between gap-4 border-b border-[var(--color-border)] pb-2 min-w-0">
+                <dt className="text-[var(--color-text-secondary)] flex-shrink-0">{k}</dt>
+                <dd className="font-medium text-[var(--color-text-primary)] text-right min-w-0 break-words">{v}</dd>
               </div>
             ))}
             <div className="pt-1">

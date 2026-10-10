@@ -124,6 +124,7 @@
   --sidebar-collapsed-width: 72px;
   --map-filter-width: 360px;
   --details-drawer-width: 400px;
+  --min-touch: 44px;
   
   /* Z-index */
   --z-dropdown: 100;
@@ -136,6 +137,14 @@
 }
 
 /* Dark mode not used - keeping light only per clean UI rules */
+
+/* Mobile: slimmer header, fluid filter width, safe-area */
+@media (max-width: 640px) {
+  :root {
+    --header-height: 56px;
+    --map-filter-width: min(360px, 100%);
+  }
+}
 
 /* Focus visible for accessibility */
 :focus-visible {

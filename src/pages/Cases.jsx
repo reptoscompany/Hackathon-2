@@ -90,7 +90,7 @@ export function Cases() {
                   {
                     key: 'actions', header: 'Detail', sortable: false,
                     render: (r) => (
-                      <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); setDetail(r); }} aria-label={`Open ${r.case_number}`}>
+                      <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); setDetail(r); }} aria-label={`Open ${r.case_number}`} className="min-h-[44px] min-w-[44px]">
                         Open
                       </Button>
                     )
@@ -112,9 +112,9 @@ export function Cases() {
               {[['Type', shown.crime_type], ['Date / time', `${shown.incident_date} ${shown.incident_time}`],
                 ['Station', shown.police_station], ['District / ward', `${shown.district} · ${shown.ward}`],
                 ['Severity', `${(shown.severity * 100).toFixed(0)}%`]].map(([k, v]) => (
-                <div key={k} className="flex justify-between gap-4 border-b border-[var(--color-border)] pb-2">
-                  <dt className="text-[var(--color-text-secondary)]">{k}</dt>
-                  <dd className="font-medium text-[var(--color-text-primary)] text-right">{v}</dd>
+                <div key={k} className="flex justify-between gap-4 border-b border-[var(--color-border)] pb-2 min-w-0">
+                  <dt className="text-[var(--color-text-secondary)] flex-shrink-0">{k}</dt>
+                  <dd className="font-medium text-[var(--color-text-primary)] text-right min-w-0 break-words">{v}</dd>
                 </div>
               ))}
             </dl>

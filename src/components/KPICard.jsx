@@ -27,16 +27,16 @@ const KPICard = forwardRef(function KPICard({
     <div
       ref={ref}
       className={`
-        bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-6
-        transition-shadow hover:shadow-md
+        bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-4 sm:p-6
+        transition-shadow hover:shadow-md min-w-0
         ${className}
       `}
       {...props}
     >
-      <div className="flex items-start justify-between">
-        <div>
+      <div className="flex items-start justify-between gap-3 min-w-0">
+        <div className="min-w-0">
           <p className="text-sm font-medium text-[var(--color-text-secondary)]">{title}</p>
-          <p className="mt-2 text-3xl font-bold text-[var(--color-text-primary)] tabular-nums animate-count-up">
+          <p className="mt-2 text-2xl sm:text-3xl font-bold text-[var(--color-text-primary)] tabular-nums animate-count-up break-words">
             {value}
           </p>
           {change !== undefined && (
@@ -52,7 +52,7 @@ const KPICard = forwardRef(function KPICard({
           )}
         </div>
         {icon && (
-          <div className="w-12 h-12 rounded-lg bg-[var(--color-accent-light)] flex items-center justify-center text-[var(--color-accent)] flex-shrink-0">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-[var(--color-accent-light)] flex items-center justify-center text-[var(--color-accent)] flex-shrink-0">
             {icon}
           </div>
         )}

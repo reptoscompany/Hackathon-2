@@ -91,7 +91,7 @@ export function HotspotsRisk() {
               />
               <ul className="mt-4 divide-y divide-[var(--color-border)]">
                 {hotspots.slice(0, 8).map((h) => (
-                  <li key={h.ward} className="py-2.5 flex items-center gap-3">
+                  <li key={h.ward} className="py-3 flex items-center gap-3 flex-wrap">
                     <span className="w-3 h-3 rounded-full flex-shrink-0" style={{ background: RISK_COLORS[h.level] }} aria-hidden="true" />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-[var(--color-text-primary)]">{h.ward}</p>
@@ -159,7 +159,7 @@ export function HotspotsRisk() {
                   </div>
                   <input id={`w-${key}`} type="range" min="0" max="100" value={Math.round(weights[key] * 100)}
                     onChange={(e) => setWeights((w) => ({ ...w, [key]: Number(e.target.value) / 100 }))}
-                    className="!p-0" aria-label={`${WEIGHT_LABELS[key]} weight`} />
+                    className="!p-0 w-full min-h-[44px] py-3 touch-manipulation" aria-label={`${WEIGHT_LABELS[key]} weight`} />
                 </div>
               ))}
               <Button variant="outline" size="sm" fullWidth onClick={() => setWeights(DEFAULT_WEIGHTS)}>Reset weights</Button>

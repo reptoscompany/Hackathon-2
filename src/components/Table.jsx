@@ -106,8 +106,8 @@ const Table = forwardRef(function Table({
         </div>
       )}
       
-      <div className="overflow-x-auto">
-        <table className="w-full" role="grid" {...props}>
+      <div className="overflow-x-auto -mx-1 px-1">
+        <table className="w-full min-w-max" role="grid" {...props}>
           <thead>
             <tr className="bg-[var(--color-navy-50)]">
               {selectionMode && (
@@ -116,7 +116,7 @@ const Table = forwardRef(function Table({
                     type="checkbox"
                     checked={localSelection.size === paginatedData.length && paginatedData.length > 0}
                     onChange={handleSelectAll}
-                    className="w-4 h-4 rounded border-[var(--color-border)] text-[var(--color-accent)] focus:ring-[var(--color-accent)]"
+                    className="w-5 h-5 rounded border-[var(--color-border)] text-[var(--color-accent)] focus:ring-[var(--color-accent)]"
                     aria-label="Select all rows"
                   />
                 </th>
@@ -176,7 +176,7 @@ const Table = forwardRef(function Table({
                         checked={localSelection.has(rowIndex)}
                         onChange={() => handleSelectRow(rowIndex)}
                         onClick={(e) => e.stopPropagation()}
-                        className="w-4 h-4 rounded border-[var(--color-border)] text-[var(--color-accent)] focus:ring-[var(--color-accent)]"
+                        className="w-5 h-5 rounded border-[var(--color-border)] text-[var(--color-accent)] focus:ring-[var(--color-accent)]"
                         aria-label={`Select row ${rowIndex + 1}`}
                       />
                     </td>
@@ -194,11 +194,11 @@ const Table = forwardRef(function Table({
       </div>
 
       {pagination && totalPages > 1 && (
-        <div className="flex items-center justify-between mt-4 px-2">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 flex-wrap mt-4 px-2">
           <div className="text-sm text-[var(--color-text-secondary)]">
             Showing {(currentPage - 1) * pageSize + 1} to {Math.min(currentPage * pageSize, sortedData.length)} of {sortedData.length} results
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <Button
               variant="outline"
               size="sm"

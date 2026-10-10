@@ -35,7 +35,8 @@ const getTheme = (dark = false) => ({
     left: 40,
     right: 20,
     top: 40,
-    bottom: 40
+    bottom: 40,
+    containLabel: true
   },
   xAxis: {
     axisLine: { lineStyle: { color: dark ? '#334155' : '#e2e8f0' } },
@@ -53,8 +54,9 @@ const getTheme = (dark = false) => ({
     backgroundColor: dark ? '#1e293b' : '#ffffff',
     borderColor: dark ? '#334155' : '#e2e8f0',
     borderWidth: 1,
+    confine: true,
     textStyle: { color: dark ? '#f1f5f9' : '#1e293b' },
-    extraCssText: 'box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); border-radius: 8px; padding: 8px 12px;'
+    extraCssText: 'box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); border-radius: 8px; padding: 8px 12px; max-width: 80vw; white-space: normal;'
   },
   legend: {
     textStyle: { color: dark ? '#cbd5e1' : '#475569', fontSize: 12 },
@@ -130,10 +132,12 @@ export const createLineChartOption = (data, {
   legend: showLegend ? { 
     data: yKeys.map(k => labels[k] || k), 
     bottom: 0,
+    type: 'scroll',
     selectedMode: true
   } : false,
   tooltip: { 
     trigger: 'axis',
+    confine: true,
     valueFormatter: (v) => v.toLocaleString()
   },
   xAxis: { 
@@ -175,8 +179,8 @@ export const createBarChartOption = (data, {
   stacked = false
 } = {}) => ({
   title: title ? { text: title, left: 'center' } : undefined,
-  legend: showLegend ? { data: yKeys.map(k => labels[k] || k), bottom: 0 } : false,
-  tooltip: { trigger: 'axis', valueFormatter: (v) => v.toLocaleString() },
+  legend: showLegend ? { data: yKeys.map(k => labels[k] || k), bottom: 0, type: 'scroll' } : false,
+  tooltip: { trigger: 'axis', confine: true, valueFormatter: (v) => v.toLocaleString() },
   xAxis: { type: 'category', data: data.map(d => d[xKey]) },
   yAxis: { type: 'value' },
   series: yKeys.map((key, i) => ({
@@ -199,10 +203,11 @@ export const createHeatmapOption = (data, {
   title: title ? { text: title, left: 'center' } : undefined,
   tooltip: { 
     trigger: 'item',
+    confine: true,
     formatter: (params) => `${params.value[2] ? yLabels[params.value[1]] : ''} ${params.value[1] ? xLabels[params.value[0]] : ''}: ${params.value[2] ?? 0}`
   },
-  grid: { left: 80, right: 20, top: 40, bottom: 60 },
-  xAxis: { type: 'category', data: xLabels, axisLabel: { interval: 0, rotate: 45 } },
+  grid: { left: 80, right: 20, top: 40, bottom: 60, containLabel: true },
+  xAxis: { type: 'category', data: xLabels, axisLabel: { interval: 0, rotate: 45, fontSize: 10 } },
   yAxis: { type: 'category', data: yLabels },
   visualMap: { 
     min: 0, 
@@ -223,8 +228,8 @@ export const createHeatmapOption = (data, {
 
 export const createPieChartOption = (data, { title, valueKey = 'count', nameKey = 'type', colors = COLORS } = {}) => ({
   title: title ? { text: title, left: 'center' } : undefined,
-  tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
-  legend: { orient: 'vertical', left: 'left', top: 'middle' },
+  tooltip: { trigger: 'item', confine: true, formatter: '{b}: {c} ({d}%)' },
+  legend: { orient: 'horizontal', left: 'center', bottom: 0, type: 'scroll' },
   series: [{
     type: 'pie',
     radius: ['40%', '70%'],
