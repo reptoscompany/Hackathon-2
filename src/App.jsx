@@ -7,6 +7,7 @@ import { HotspotsRisk } from '@/pages/HotspotsRisk'
 import { TrendsTime } from '@/pages/TrendsTime'
 import { PatrolPlanner } from '@/pages/PatrolPlanner'
 import { Cases } from '@/pages/Cases'
+import { AIAssistant } from '@/pages/AIAssistant'
 import { SystemEthics } from '@/pages/SystemEthics'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { DataProvider } from '@/services/DataContext'
@@ -31,6 +32,7 @@ function App() {
                 <Route path="trends-time" element={<TrendsTime />} />
                 <Route path="patrol-planner" element={<PatrolPlanner />} />
                 <Route path="cases" element={<Cases />} />
+                <Route path="ai-assistant" element={<AIAssistant />} />
                 <Route path="system-ethics" element={<SystemEthics />} />
                 <Route path="*" element={<Navigate to="/overview" replace />} />
               </Route>

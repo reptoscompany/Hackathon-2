@@ -9,6 +9,7 @@ import {
   Shield,
   FileText,
   Settings,
+  Sparkles,
   HelpCircle,
   Bell,
   Menu,
@@ -30,6 +31,7 @@ const NAV_ITEMS = [
   { path: '/trends-time', label: 'Trends & Time', icon: TrendingUp, description: 'Temporal analysis & patrol windows' },
   { path: '/patrol-planner', label: 'Patrol Planner', icon: Shield, description: 'Units, routes & deployment' },
   { path: '/cases', label: 'Cases', icon: FileText, description: 'Searchable case management' },
+  { path: '/ai-assistant', label: 'AI Assistance', icon: Sparkles, description: 'Local AI model analysis & prediction' },
   { path: '/system-ethics', label: 'System & Ethics', icon: Settings, description: 'Architecture & principles' }
 ];
 
