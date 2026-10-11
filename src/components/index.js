@@ -12,3 +12,4 @@ export { AlertsPanel } from './AlertsPanel';
 export { ExportMenu } from './ExportMenu';
 export { GuidedDemo } from './GuidedDemo';
 export { RoleSwitcher } from './RoleSwitcher';
+export { ErrorBoundary } from './ErrorBoundary';

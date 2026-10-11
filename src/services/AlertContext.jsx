@@ -100,13 +100,20 @@ export function AlertProvider({ children }) {
   const [unreadCount, setUnreadCount] = useState(0);
   const [panelOpen, setPanelOpen] = useState(false);
 
-  useEffect(() => {
+  const refreshAlerts = useCallback(() => {
     if (services) {
       const newAlerts = generateAlerts(services);
       setAlerts(newAlerts);
       setUnreadCount(newAlerts.filter(a => !a.read).length);
     }
   }, [services]);
+
+  useEffect(() => {
+    refreshAlerts();
+    // Regenerate alerts every minute so "today" / "yesterday" comparisons stay current
+    const interval = setInterval(refreshAlerts, 60000);
+    return () => clearInterval(interval);
+  }, [refreshAlerts]);
 
   const markRead = useCallback((id) => {
     setAlerts(prev => prev.map(a => a.id === id ? { ...a, read: true } : a));

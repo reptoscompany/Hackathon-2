@@ -1,5 +1,5 @@
 import { forwardRef, useId, useState, useEffect } from 'react';
-import { Search, X, ChevronDown, Calendar, MapPin } from 'lucide-react';
+import { Search, X, ChevronDown, Calendar } from 'lucide-react';
 import { Badge } from './Badge';
 
 const Input = forwardRef(function Input({ 
@@ -297,13 +297,13 @@ const MultiSelect = forwardRef(function MultiSelect({
 });
 MultiSelect.displayName = 'MultiSelect';
 
-const DateRangePicker = forwardRef(function DateRangePicker({ 
+function DateRangePicker({ 
   label, 
   value = [], 
   onChange, 
   className = '',
   ...props 
-}, ref) {
+}) {
   return (
     <div className={`min-w-0 ${className}`}>
       {label && (
@@ -330,7 +330,7 @@ const DateRangePicker = forwardRef(function DateRangePicker({
       </div>
     </div>
   );
-});
+}
 DateRangePicker.displayName = 'DateRangePicker';
 
 export { Input, Select, MultiSelect, DateRangePicker };

@@ -38,7 +38,6 @@ export function HotspotsRisk() {
       byWard[i.ward].push(i);
     });
     return Object.entries(byWard)
-      .slice(0, 6)
       .map(([ward, list]) => {
         const avgSev = list.reduce((s, i) => s + i.severity, 0) / list.length;
         const cells = TIME_WINDOWS.map((w) => {

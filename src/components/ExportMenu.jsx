@@ -1,14 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { Download, FileText, Printer } from 'lucide-react';
 import { Button } from './Button';
-import { useData } from '@/services/DataContext';
 import { toCsv, downloadCsv } from '@/utils/geo';
 
 /** Header "Export" menu: working CSV export + print-friendly view for PDF. */
 export function ExportMenu({ rows, filename = 'crimemap-export.csv', columns }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
-  const { services } = useData();
 
   useEffect(() => {
     function onDocClick(e) {
@@ -16,7 +14,7 @@ export function ExportMenu({ rows, filename = 'crimemap-export.csv', columns }) 
     }
     document.addEventListener('mousedown', onDocClick);
     return () => document.removeEventListener('mousedown', onDocClick);
-  }, [open ]);
+  }, [open]);
 
   const defaultColumns = [
     { key: 'case_number', header: 'case_number' },
@@ -31,7 +29,7 @@ export function ExportMenu({ rows, filename = 'crimemap-export.csv', columns }) 
     { key: 'status', header: 'status' }
   ];
   const cols = columns || defaultColumns;
-  const data = rows || services?.incidents || [];
+  const data = rows || [];
 
   const handleCsv = () => {
     downloadCsv(filename, toCsv(data, cols));

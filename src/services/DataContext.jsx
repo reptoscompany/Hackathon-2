@@ -30,7 +30,7 @@ export function DataProvider({ children }) {
 
     const { crime_incidents, police_stations, patrol_units: patrolUnits, landmarks, wards, districts } = data;
 
-    // KPI computations
+    // KPI computations - dates computed fresh each render
     const now = new Date();
     const todayStr = now.toISOString().split('T')[0];
     const weekAgo = new Date(now.getTime() - 7 * 86400000).toISOString().split('T')[0];

@@ -249,4 +249,3 @@ export const createPieChartOption = (data, { title, valueKey = 'count', nameKey 
 });
 
 export { Chart };
-export default Chart;
