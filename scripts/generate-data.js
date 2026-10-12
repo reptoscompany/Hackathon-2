@@ -43,11 +43,19 @@ const RAILWAY = { lat: 11.9289, lng: 79.8356 }; // Puducherry Railway Station
 
 const BOUNDS = {
   north: 12.05,
-  south: 11.85,
-  east: 79.95,
+  south: 11.8,
+  east: 79.84,
   west: 79.7,
   center: { lat: 11.9416, lng: 79.8083 }
 };
+
+// Land mask: everything east of ~79.84 is Bay of Bengal (sea).
+// Keep all synthetic points west of the coastline so no markers land in the sea.
+function onLand(lat, lng) {
+  if (lat < BOUNDS.south || lat > BOUNDS.north) return false;
+  if (lng < BOUNDS.west || lng > BOUNDS.east) return false;
+  return true;
+}
 
 const CRIME_TYPES = [
   { type: 'Assault', color: 'assault', severityWeight: 0.9, baseWeight: 15 },
@@ -74,9 +82,9 @@ const POLICE_STATIONS = [
   { id: 'PS001', name: 'Grand Bazaar Police Station', district: 'Puducherry', lat: 11.9345, lng: 79.8298, contact: '+91-413-222-0101' },
   { id: 'PS002', name: 'Muthialpet Police Station', district: 'Puducherry', lat: 11.9523, lng: 79.8156, contact: '+91-413-222-0102' },
   { id: 'PS003', name: 'Lawspet Police Station', district: 'Puducherry', lat: 11.9789, lng: 79.8123, contact: '+91-413-222-0103' },
-  { id: 'PS004', name: 'Kalamandapam Police Station', district: 'Puducherry', lat: 11.9234, lng: 79.8456, contact: '+91-413-222-0104' },
+  { id: 'PS004', name: 'Kalamandapam Police Station', district: 'Puducherry', lat: 11.9234, lng: 79.8256, contact: '+91-413-222-0104' },
   { id: 'PS005', name: 'Villianur Police Station', district: 'Villianur', lat: 11.9156, lng: 79.7523, contact: '+91-413-222-0105' },
-  { id: 'PS006', name: 'Ariyankuppam Police Station', district: 'Ariyankuppam', lat: 11.8987, lng: 79.8678, contact: '+91-413-222-0106' },
+  { id: 'PS006', name: 'Ariyankuppam Police Station', district: 'Ariyankuppam', lat: 11.8987, lng: 79.8178, contact: '+91-413-222-0106' },
   { id: 'PS007', name: 'Bahour Police Station', district: 'Bahour', lat: 11.8123, lng: 79.7456, contact: '+91-413-222-0107' },
   { id: 'PS008', name: 'Nettapakkam Police Station', district: 'Nettapakkam', lat: 11.8678, lng: 79.6987, contact: '+91-413-222-0108' }
 ];
@@ -91,7 +99,7 @@ const LANDMARKS = [
   { id: 'LM007', name: 'Lawspet Market', type: 'market', lat: 11.9801, lng: 79.8134 },
   { id: 'LM008', name: 'Indira Gandhi Medical College', type: 'hospital', lat: 11.9456, lng: 79.8189 },
   { id: 'LM009', name: 'Villianur Bus Stand', type: 'bus_stop', lat: 11.9167, lng: 79.7534 },
-  { id: 'LM010', name: 'Ariyankuppam Market', type: 'market', lat: 11.8998, lng: 79.8689 }
+  { id: 'LM010', name: 'Ariyankuppam Market', type: 'market', lat: 11.8998, lng: 79.8189 }
 ];
 
 const WARDS = [
@@ -184,20 +192,24 @@ function pickStatus() {
 function generateIncident(index) {
   const crimeType = pickCrimeType();
 
-  // Location: assaults cluster at Grand Bazaar; thefts near markets/bus stops; rest uniform
+  // Location: assaults cluster at Grand Bazaar; thefts near markets/bus stops; rest uniform on LAND only
   let lat;
   let lng;
-  if (crimeType.type === 'Assault' && random.next() < 0.65) {
-    lat = MARKET.lat + random.nextFloat(-0.007, 0.007);
-    lng = MARKET.lng + random.nextFloat(-0.007, 0.007);
-  } else if (crimeType.type === 'Theft' && random.next() < 0.45) {
-    const pool = LANDMARKS.filter((l) => l.type === 'market' || l.type === 'bus_stop');
-    const landmark = random.choice(pool);
-    lat = landmark.lat + random.nextFloat(-0.009, 0.009);
-    lng = landmark.lng + random.nextFloat(-0.009, 0.009);
-  } else {
-    lat = random.nextFloat(BOUNDS.south, BOUNDS.north);
-    lng = random.nextFloat(BOUNDS.west, BOUNDS.east);
+  for (let attempt = 0; attempt < 50; attempt++) {
+    if (crimeType.type === 'Assault' && random.next() < 0.65) {
+      lat = MARKET.lat + random.nextFloat(-0.007, 0.007);
+      lng = MARKET.lng + random.nextFloat(-0.007, 0.007);
+    } else if (crimeType.type === 'Theft' && random.next() < 0.45) {
+      const pool = LANDMARKS.filter((l) => l.type === 'market' || l.type === 'bus_stop');
+      const landmark = random.choice(pool);
+      lat = landmark.lat + random.nextFloat(-0.009, 0.009);
+      lng = landmark.lng + random.nextFloat(-0.009, 0.009);
+    } else {
+      lat = random.nextFloat(BOUNDS.south, BOUNDS.north);
+      lng = random.nextFloat(BOUNDS.west, BOUNDS.east);
+    }
+    if (onLand(lat, lng)) break;
+    if (attempt === 49) { lat = MARKET.lat; lng = MARKET.lng; }
   }
 
   const date = randomDateInLastMonths(12);
@@ -238,11 +250,14 @@ function generatePatrolUnits() {
     const offset = random.nextFloat(-0.02, 0.02);
     const roll = random.next();
     const availability = roll < 0.6 ? 'Available' : roll < 0.85 ? 'Busy' : 'Offline';
+    let uLat = station.lat + offset;
+    let uLng = station.lng + offset;
+    if (!onLand(uLat, uLng)) { uLat = station.lat; uLng = station.lng; }
     units.push({
       unit_id: `PU${String(i).padStart(3, '0')}`,
       unit_type: random.choice(UNIT_TYPES),
-      current_latitude: Number((station.lat + offset).toFixed(6)),
-      current_longitude: Number((station.lng + offset).toFixed(6)),
+      current_latitude: Number(uLat.toFixed(6)),
+      current_longitude: Number(uLng.toFixed(6)),
       availability_status: availability,
       assigned_station: station.name,
       assigned_station_id: station.id,

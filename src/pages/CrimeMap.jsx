@@ -16,6 +16,8 @@ import { useData } from '@/services/DataContext';
 import { useRole } from '@/services/RoleContext';
 import { useDemo } from '@/services/DemoContext';
 import { buildWardHotspots, crimeColor, haversineKm, RISK_COLORS } from '@/utils/geo';
+import { PONDY_BOUNDS, useSimulatedLiveUnits } from '@/utils/pondyLive';
+import { GoogleMapView } from '@/components/GoogleMapView';
 
 const CENTER = [11.9416, 79.8083];
 const RAILWAY = { lat: 11.9289, lng: 79.8356, label: 'Railway Station, Puducherry' };
@@ -95,6 +97,8 @@ export function CrimeMap() {
   const [layers, setLayers] = useState({ markers: true, heatmap: false, hotspots: true, stations: true, units: false, landmarks: true });
   const [search, setSearch] = useState({ mode: 'railway', lat: String(RAILWAY.lat), lng: String(RAILWAY.lng), radiusKm: '2', crimeType: '', from: '', to: '' });
   const [searchResult, setSearchResult] = useState(null);
+  const [basemap, setBasemap] = useState('leaflet');
+  const liveUnits = useSimulatedLiveUnits(services?.units, true);
 
   // Guided demo: steps 1, 2, 6 drive this view
   useEffect(() => {
@@ -206,8 +210,18 @@ export function CrimeMap() {
             {filtered.length} of {services.incidents.length} incidents · markers cluster when zoomed out ·
             Assumption: blue = Theft (PDF text garbled)
           </p>
+          <div className="flex gap-1.5 flex-wrap">
+            <Badge size="sm" variant="gray">Puducherry only</Badge>
+            <Badge size="sm" variant="success" dot>Simulated live units</Badge>
+          </div>
         </div>
         <div className="flex items-center gap-2 flex-wrap no-print">
+          <Button variant={basemap === 'leaflet' ? 'secondary' : 'outline'} size="sm" onClick={() => setBasemap('leaflet')}>
+            Leaflet
+          </Button>
+          <Button variant={basemap === 'google' ? 'secondary' : 'outline'} size="sm" onClick={() => setBasemap('google')}>
+            Google
+          </Button>
           <Button variant={filtersOpen ? 'secondary' : 'outline'} size="sm" onClick={() => setFiltersOpen((o) => !o)} leftIcon={<Filter className="w-4 h-4" aria-hidden="true" />}>
             Filters
           </Button>
@@ -282,7 +296,19 @@ export function CrimeMap() {
         {/* Map */}
         <div className="flex-1 min-w-0">
           <div className="rounded-lg overflow-hidden border border-[var(--color-border)] h-[60vh] min-h-[320px] max-h-[560px]">
-            <MapContainer center={CENTER} zoom={12} style={{ height: '100%', width: '100%' }} aria-label="Interactive crime map of Puducherry area">
+            {basemap === 'google' ? (
+              <GoogleMapView
+                markers={visibleMarkers}
+                clusters={clusters}
+                hotspots={hotspots}
+                units={liveUnits || services.units}
+                stations={services.stations}
+                layers={layers}
+                searchResult={searchResult}
+                onSelect={setSelected}
+              />
+            ) : (
+            <MapContainer center={CENTER} zoom={12} minZoom={11} maxZoom={18} maxBounds={PONDY_BOUNDS} maxBoundsViscosity={1.0} style={{ height: '100%', width: '100%' }} aria-label="Interactive crime map of Puducherry area (Puducherry only)">
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -336,7 +362,7 @@ export function CrimeMap() {
                 </Marker>
               ))}
 
-              {layers.units && services.units.filter((u) => u.availability_status !== 'Offline').map((u) => (
+              {layers.units && (liveUnits || []).filter((u) => u.availability_status !== 'Offline').map((u) => (
                 <CircleMarker key={u.unit_id} center={[u.current_latitude, u.current_longitude]} radius={7}
                   pathOptions={{ color: '#fff', weight: 2, fillColor: u.availability_status === 'Available' ? '#16a34a' : '#D71920', fillOpacity: 1 }}>
                   <Popup><strong>{u.unit_id}</strong> · {u.unit_type}<br />{u.availability_status} · {u.assigned_station}</Popup>
@@ -355,6 +381,7 @@ export function CrimeMap() {
                   pathOptions={{ color: '#2118C9', weight: 2, dashArray: '6 4', fillOpacity: 0.05 }} />
               )}
             </MapContainer>
+            )}
           </div>
 
           {/* Geospatial search */}

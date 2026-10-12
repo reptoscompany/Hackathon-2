@@ -54,6 +54,7 @@ const NAV_ITEMS = [
   { path: '/patrol-planner', label: 'Patrol Planner', shortLabel: 'Patrol', icon: Shield, description: 'Units, routes & deployment' },
   { path: '/cases', label: 'Cases', shortLabel: 'Cases', icon: FileText, description: 'Searchable case management' },
   { path: '/ai-assistant', label: 'AI Assistance', shortLabel: 'AI', icon: Sparkles, description: 'Local AI model analysis & prediction' },
+  { path: '/safety-score', label: 'Safety Score', shortLabel: 'Safety', icon: Shield, description: 'Environmental safety & vulnerability heatmap' },
   { path: '/system-ethics', label: 'System & Ethics', shortLabel: 'Ethics', icon: Settings, description: 'Architecture & principles' }
 ];
 

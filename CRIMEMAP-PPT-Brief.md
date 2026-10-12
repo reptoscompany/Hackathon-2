@@ -81,6 +81,20 @@
 
 **Speaker note (live demo path):** Overview → Crime Map (Grand Bazaar fly-to + heatmap) → Hotspots (drag a slider) → Dashboard (weekend alert) → Patrol Planner (assign a unit) → Cases (switch role to Analyst, fields mask).
 
+## Slide 6B — NEW Module 8: Environmental Safety & Vulnerability Heatmap (Safety Score & CPTED Engine)
+
+- Shift: from reactive crime tracking to proactive environmental safety scoring
+- Green Spots (Safe): high crowd / roaming density + strong lighting + visible CCTV
+- Yellow / Amber Spots (Moderate): average footfall, moderate lighting, partial CCTV
+- Red Spots (High-Vulnerability): isolated / low footfall + poor lighting + CCTV blind spots + historic density
+- Formula: Safety Score = w1*(Footfall / Roaming Density) + w2*(CCTV Coverage) + w3*(Lighting & Openness) - w4*(Historical Incident Density)
+- For Police: directs beat / mobile patrols to red zones at late-night hours
+- For Citizens: routes commuters via green monitored corridors, not isolated alleys
+- Privacy: aggregated ward / street-segment level only — zero identifying pins, survivor anonymity preserved
+- Connects to: Patrol Planner (auto-prioritizes red zones) + AI Assistant (explains why an area is red + suggests fixes)
+
+**Speaker note (30-40 sec pitch — say aloud):** "CrimeMap told you WHERE crime happened. Module 8 tells you WHERE it is unsafe right now — before a crime happens. We score every street on footfall, lighting, CCTV, minus past incidents. Green means active, lit, and monitored. Red means isolated, dark, and blind. Patrols go straight to the red zones at night, citizens stay on green corridors, and our AI explains exactly how to turn red to green. Proactive safety, not just reactive maps — with zero identifying pins."
+
 ## Slide 7 — Standout Features
 
 - 5-minute guided in-app demo that flies across pages by itself

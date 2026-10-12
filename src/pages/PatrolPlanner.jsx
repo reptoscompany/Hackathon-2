@@ -9,6 +9,7 @@ import { LoadingState, ErrorState } from '@/components/DataState';
 import { ExportMenu } from '@/components/ExportMenu';
 import { useData } from '@/services/DataContext';
 import { buildWardHotspots, haversineKm, simulatedResponseMin, RISK_COLORS } from '@/utils/geo';
+import { PONDY_BOUNDS, useSimulatedLiveUnits } from '@/utils/pondyLive';
 
 const CENTER = [11.9416, 79.8083];
 
@@ -16,6 +17,7 @@ export function PatrolPlanner() {
   const { services, loading, error } = useData();
   const [focusWard, setFocusWard] = useState('');
   const [deployed, setDeployed] = useState([]);
+  const liveUnits = useSimulatedLiveUnits(services?.units, true);
 
   const hotspots = useMemo(
     () => (services ? buildWardHotspots(services.incidents, services.landmarks).slice(0, 5) : []),
@@ -26,7 +28,7 @@ export function PatrolPlanner() {
 
   const nearby = useMemo(() => {
     if (!services || !focus) return [];
-    return services.units
+    return (liveUnits || services.units)
       .filter((u) => u.availability_status === 'Available')
       .map((u) => ({
         ...u,
@@ -35,7 +37,7 @@ export function PatrolPlanner() {
       }))
       .sort((a, b) => a.etaMin - b.etaMin)
       .slice(0, 5);
-  }, [services, focus]);
+  }, [services, focus, liveUnits]);
 
   const route = useMemo(() => {
     if (hotspots.length < 2) return [];
@@ -67,6 +69,10 @@ export function PatrolPlanner() {
           <p className="text-[var(--color-text-secondary)]">
             {available} available · {busy} busy · {services.units.length - available - busy} offline (simulated) · response times simulated at 28 km/h urban speed + 2 min dispatch
           </p>
+          <div className="flex gap-1.5 flex-wrap">
+            <Badge size="sm" variant="gray">Puducherry only</Badge>
+            <Badge size="sm" variant="success" dot>Simulated live — units drift every 4s</Badge>
+          </div>
         </div>
         <div className="flex items-center gap-2 flex-wrap no-print">
           <Select value={focusWard} onChange={(e) => setFocusWard(e.target.value)}
@@ -83,7 +89,7 @@ export function PatrolPlanner() {
         <div className="lg:col-span-2 space-y-6">
           <Card padded={false}>
             <div className="rounded-lg overflow-hidden h-[60vh] min-h-[320px] max-h-[480px]">
-              <MapContainer center={CENTER} zoom={12} style={{ height: '100%', width: '100%' }} aria-label="Patrol units and high-risk regions map">
+              <MapContainer center={CENTER} zoom={12} minZoom={11} maxZoom={18} maxBounds={PONDY_BOUNDS} maxBoundsViscosity={1.0} style={{ height: '100%', width: '100%' }} aria-label="Patrol units and high-risk regions map (Puducherry only)">
                 <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 {hotspots.map((h) => (
                   <Circle key={h.ward} center={h.center} radius={800}
@@ -96,7 +102,7 @@ export function PatrolPlanner() {
                     <Popup>Simulated patrol route through the top-4 risk zones (simulated)</Popup>
                   </Polyline>
                 )}
-                {services.units.filter((u) => u.availability_status !== 'Offline').map((u) => (
+                {(liveUnits || services.units).filter((u) => u.availability_status !== 'Offline').map((u) => (
                   <CircleMarker key={u.unit_id} center={[u.current_latitude, u.current_longitude]} radius={deployed.includes(u.unit_id) ? 10 : 7}
                     pathOptions={{
                       color: '#fff', weight: 2,

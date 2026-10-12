@@ -27,9 +27,11 @@ if errorlevel 1 goto :build_fail
 
 echo.
 echo Starting preview server and opening your browser...
-echo Site URL: http://localhost:4173/
+echo Freeing port 4173 if a previous preview is still running...
+for /f "tokens=5" %%p in ('netstat -ano ^| findstr :4173 ^| findstr LISTENING') do taskkill /F /PID %%p >nul 2>nul
+echo Site URL: http://localhost:4173/ (if busy, Vite will use the next free port - see below)
 echo Keep this window open. Press Ctrl+C to stop the server.
-call npm run preview -- --port 4173 --strictPort --open
+call npm run preview -- --port 4173 --open
 pause
 exit /b 0
 
